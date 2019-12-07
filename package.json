@@ -1,0 +1,31 @@
+{
+  "name": "hosteditor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./app/index.js",
+  "scripts": {
+    "dev": "electron ./app/index.js",
+    "build": "electron-builder ./app/index.js"
+  },
+  "build": {
+    "productName":"host编辑器",
+    "appId": "com.imwom.www",
+    "copyright":"im-robot@git.com",
+    "directories": {
+      "output": "build"
+    },
+    "win": {  
+      "icon": "./icon.ico"
+    }  
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^7.1.3",
+    "electron-builder": "^21.2.0"
+  },
+  "dependencies": {
+    "nedb": "^1.8.0"
+  }
+}

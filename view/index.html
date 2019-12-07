@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./style/index.css">
+</head>
+<body>
+  <div id="app">
+    <div class="header">
+      Host编辑器
+    </div>
+    <div class="container">
+      <div class="sidebar">
+        <div class="edit">
+          <div class="add-btn" @click="add">添加配置</div>
+        </div>
+        <div class="list">
+          <template v-for="(item, index) in list">
+            <div class="item" :class="{ active: index === chooseIndex }" :key="index" @click="chooseIndex = index">
+              {{item.name}}
+              <div class="start" :class="{ active: item.open }" @click.stop="start(index)">★</div>
+            </div>
+          </template>
+        </div>
+      </div>
+      <div class="content">
+        <div class="editor" v-if="list && list.length > 0">
+          <textarea v-model="config.content" @input="update"></textarea>
+        </div>
+        <div v-else>
+          <h2>暂无添加的配置</h2>
+        </div>
+      </div>
+      <div class="newname-shadow" v-show="visible">
+        <div class="box">
+          <div class="box-header">
+            请输入新配置名称：
+          </div>
+          <div class="input">
+            <input type="text" v-model="newConfig.name">
+          </div>
+          <div class="box-footer">
+            <div class="btn cancel" @click="visible = false">取消</div>
+            <div class="btn ok" @click="save">确定</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+  <script>
+    var Datastore = require('nedb')
+    var fs = require('fs')
+    var path = require('path')
+    var db = new Datastore({ filename: './dbdata', autoload: true });
+    db.loadDatabase(function (err) { err && alert('数据库崩溃，请重启程序')})
+    let hostPath = 'C:\Windows\System32\drivers\etc\hosts'
+    new Vue({
+      el: '#app',
+      data () {
+        return {
+          list: [],
+          visible: false,
+          chooseIndex: 0,
+          newConfig: {
+            name: '',
+            content: '',
+            open: false
+          }
+        }
+      },
+      computed: {
+        config () {
+          return this.list && this.list[this.chooseIndex]
+        }
+      },
+      created () {
+        this.initList()
+      },
+      methods: {
+        initList () {
+          db.find({}, (err, doc) => {
+            if (err) {
+              alert('数据库崩溃，请重试')
+              throw err
+            }
+            this.list = doc
+          })
+        },
+        add () {
+          this.newConfig = {
+            name: '',
+            content: '',
+            open: false
+          }
+          this.visible = true
+        },
+        save () {
+          let doc = this.newConfig
+          db.insert(doc, (err, doc) => {
+            if (!err) {
+              this.initList()
+            }
+          })
+          this.visible = false
+        },
+        update () {
+          db.update({
+            _id: this.config._id
+          },  { $set: { content: this.config.content } }, {}, (err, doc) => {
+            if(!err) {
+              this.initList()
+            }
+          })
+        },
+        start (index) {
+          this.list[index].open = !this.list[index].open
+          let list = []
+          for (let item of this.list) {
+            if (item.open) {
+              list.push(item.content)
+            }
+          }
+          let hostStr = list.join('\n')
+          
+          this.writeFile(hostStr)
+        },
+        writeFile (hostStr) {
+          fs.writeFile('C:\\Windows\\System32\\drivers\\etc\\hosts', hostStr, { 'flag': 'w' }, function (err, data) {
+            console.log(err, data)
+          })
+        }
+      }
+    })
+  </script>
+</body>
+</html>

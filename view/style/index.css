@@ -1,0 +1,166 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+}
+html, body, #app {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  user-select: none;
+}
+
+div {
+  display: flex;
+}
+
+#app {
+  flex-direction: column;
+}
+
+.header {
+  padding-left: 30px;
+  height: 57px;
+  line-height: 56px;
+  font-size: 24px;
+  border-bottom: 1px solid #d6d6d6;
+}
+
+.container {
+  display: flex;
+  flex: 1;
+}
+
+.sidebar {
+  width: 181px;
+  border-right: 1px solid #d6d6d6;
+  flex-direction: column;
+}
+
+.sidebar .edit {
+  padding: 15px 30px;
+  border-bottom: 1px solid #d6d6d6;
+}
+
+.sidebar .edit .add-btn {
+  display: block;
+  text-align: center;
+  width: 100%;
+  padding: 8px 0;
+  border: 1px solid #d6d6d6;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.sidebar .list {
+  flex-direction: column;
+}
+
+.sidebar .list .item{
+  display: block;
+  height: 43px;
+  line-height: 42px;
+  border-bottom: 1px solid #d6d6d6d3;
+  padding: 0 15px;
+  position: relative;
+}
+
+.sidebar .list .item .start {
+  position: absolute;
+  font-weight: 600;
+  right: 10px;
+  top: 0px;
+  color: black;
+  font-size: 20px;
+}
+
+.sidebar .list .item .start.active {
+  color: rgb(255, 206, 12);
+}
+
+.sidebar .list .item.active {
+  color: #fff;
+  background-color: #33AAFF;
+}
+
+.content {
+  flex: 1;
+  height: 100%;
+  padding: 15px;
+}
+
+.content .editor {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #d6d6d6;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.content .editor textarea {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  line-height: 28px;
+  resize: none;
+}
+
+.newname-shadow {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-color: #8b8b8b94;
+}
+
+.newname-shadow .box {
+  width: 540px;
+  height: 180px;
+  background-color: #fff;
+  border-radius: 15px;
+  margin: 60px auto;
+  box-shadow: 1px 1px 10px 0px #5e5e5e94;
+  display: block;
+}
+
+.newname-shadow .box .box-header {
+  padding: 20px;
+  padding-bottom: 25px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.newname-shadow .box .input {
+  padding: 0 20px;
+}
+.newname-shadow .box .input input {
+  height: 36px;
+  border: 1px solid #d6d6d6;
+  width: 100%;
+  font-size: 18px;
+  padding: 0 10px;
+}
+
+.newname-shadow .box .box-footer {
+  padding: 20px;
+  justify-content: center;
+}
+
+.newname-shadow .box .box-footer .btn {
+  font-size: 14px;
+  border: 1px solid #d6d6d6;
+  padding: 6px 18px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.newname-shadow .box .box-footer .ok {
+  background-color: #33AAFF;
+  border-color: #33AAFF;
+  color: #fff;
+  margin-left: 30px;
+}
