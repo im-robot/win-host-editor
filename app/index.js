@@ -1,7 +1,8 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain, Menu } = require('electron')
 const path = require('path')
 const renderFile = path.resolve(__dirname, '../view/index.html')
 const suspendFile = path.resolve(__dirname, '../view/suspend.html')
+const icon = path.resolve(__dirname, '../icon.ico')
 var mainWin = null
 var renderWin = null
 function createWindow () {
@@ -32,17 +33,19 @@ function createRenderWindow () {
     return false
   } else {
     renderWin = new BrowserWindow({
+      icon,
       width: 800,
       height: 600,
       webPreferences: {
         nodeIntegration: true
       }
     })
+    renderWin.setSkipTaskbar(true)
+    Menu.setApplicationMenu(null)
     // 加载index.html文件
     renderWin.loadFile(renderFile)
     renderWin.on('close', (event) => { 
       renderWin.hide()
-      renderWin.setSkipTaskbar(true)
       event.preventDefault()
     })
   }
