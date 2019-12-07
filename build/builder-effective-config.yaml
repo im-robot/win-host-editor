@@ -1,9 +1,0 @@
-directories:
-  output: build
-  buildResources: build
-productName: host编辑器
-appId: com.imwom.www
-copyright: im-robot@git.com
-win:
-  icon: ./icon.ico
-electronVersion: 7.1.3
