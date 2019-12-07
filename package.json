@@ -8,15 +8,15 @@
     "build": "electron-builder ./app/index.js"
   },
   "build": {
-    "productName":"host编辑器",
+    "productName": "host编辑器",
     "appId": "com.imwom.www",
-    "copyright":"im-robot@git.com",
+    "copyright": "im-robot@git.com",
     "directories": {
       "output": "build"
     },
-    "win": {  
+    "win": {
       "icon": "./icon.ico"
-    }  
+    }
   },
   "keywords": [],
   "author": "",
