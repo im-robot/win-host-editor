@@ -26,6 +26,7 @@
     "electron-builder": "^21.2.0"
   },
   "dependencies": {
+    "is-root": "^2.1.0",
     "nedb": "^1.8.0",
     "rage-edit": "^1.2.0"
   }

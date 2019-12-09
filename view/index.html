@@ -53,12 +53,13 @@
   </div>
   <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
   <script>
-    var Datastore = require('nedb')
-    var fs = require('fs')
-    var path = require('path')
-    var db = new Datastore({ filename: './dbdata', autoload: true });
+    const Datastore = require('nedb')
+    const fs = require('fs')
+    const os = require('os')
+    const isMac = os.platform() === 'darwin'
+    const db = new Datastore({ filename: './dbdata', autoload: true })
     db.loadDatabase(function (err) { err && alert('数据库崩溃，请重启程序')})
-    let hostPath = 'C:\Windows\System32\drivers\etc\hosts'
+    let hostPath = isMac ? '/etc/hosts' : 'C\:\\Windows\\System32\\drivers\\etc\\hosts'
     new Vue({
       el: '#app',
       data () {
@@ -130,7 +131,7 @@
           this.writeFile(hostStr)
         },
         writeFile (hostStr) {
-          fs.writeFile('C:\\Windows\\System32\\drivers\\etc\\hosts', hostStr, { 'flag': 'w' }, function (err, data) {
+          fs.writeFile( hostPath, hostStr, { 'flag': 'w' }, function (err, data) {
             console.log(err, data)
           })
         }

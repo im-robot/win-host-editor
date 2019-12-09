@@ -1,23 +1,15 @@
-const { app, BrowserWindow, ipcMain, Menu } = require('electron')
-const { Registry } = require('rage-edit')
+const { app, BrowserWindow, ipcMain, Menu, dialog } = require('electron')
 const path = require('path')
 const renderFile = path.resolve(__dirname, '../view/index.html')
 const suspendFile = path.resolve(__dirname, '../view/suspend.html')
 const icon = path.resolve(__dirname, '../icon.ico')
+const rt = require('is-root')
+
 var mainWin = null
 var renderWin = null
-Registry.set(
-  'HKCU\\Software\\Microsoft\\Windows NT\\CurrentVersion\\AppCompatFlags\\Layers', //固定，管理员权限应用列表
-  'app_change_hosts',
-  app.getPath('exe'), //应用路径
-  'RUNASADMIN', //固定写死
-)
-Registry.set(
-  'HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run',   //注册表开机启动应用路径
-  'app_change_hosts', //随意写
-  app.getPath('exe'), //当前应用路径，也是自动启动的应用路径
-  'REG_SZ', // 固定的 
-)
+let isRoot = rt()
+
+
 
 const gotTheLock = app.requestSingleInstanceLock()
 
@@ -35,6 +27,12 @@ if (!gotTheLock) {
 }
 
 function createWindow () {
+
+  if (!isRoot) {
+    dialog.showErrorBox('错误警告','请使用管理员身份打开此' +
+        '应用!')
+    app.quit()
+  }
   // 创建浏览器窗口
   mainWin = new BrowserWindow({
     width: 130,
@@ -70,7 +68,7 @@ function createRenderWindow () {
       }
     })
     renderWin.setSkipTaskbar(true)
-    // Menu.setApplicationMenu(null)
+    Menu.setApplicationMenu(null)
     // 加载index.html文件
     renderWin.loadFile(renderFile)
     renderWin.on('close', (event) => { 

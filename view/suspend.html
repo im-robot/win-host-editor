@@ -19,7 +19,8 @@
   <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
   <script>
     console.log(window)
-    let { ipcRenderer } = require('electron')
+    const { ipcRenderer } = require('electron')
+
     new Vue({
       el: '#app',
       methods: {
