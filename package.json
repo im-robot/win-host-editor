@@ -16,6 +16,9 @@
     },
     "win": {
       "icon": "./icon.ico"
+    },
+    "mac": {
+      "icon": "./icon.icns"
     }
   },
   "keywords": [],

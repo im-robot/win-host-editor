@@ -56,10 +56,13 @@
     const Datastore = require('nedb')
     const fs = require('fs')
     const os = require('os')
+    const rt = require('is-root')
+    const dbpath = './dbdata'
     const isMac = os.platform() === 'darwin'
-    const db = new Datastore({ filename: './dbdata', autoload: true })
+    const db = new Datastore({ filename: dbpath, autoload: true })
     db.loadDatabase(function (err) { err && alert('数据库崩溃，请重启程序')})
     let hostPath = isMac ? '/etc/hosts' : 'C\:\\Windows\\System32\\drivers\\etc\\hosts'
+    const isRoot = rt()
     new Vue({
       el: '#app',
       data () {
@@ -119,6 +122,7 @@
           })
         },
         start (index) {
+          console.log(isRoot)
           this.list[index].open = !this.list[index].open
           let list = []
           for (let item of this.list) {
