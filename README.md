@@ -1,2 +1,2 @@
 # win-host-editor
-windows系统hosts文件编辑器
+hosts文件编辑器
